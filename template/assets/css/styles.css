@@ -1,0 +1,117 @@
+body, html {
+  height: 100%;
+}
+
+#background {
+  background-image: url(../../assets/img/background.jpg);
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#container {
+  position: absolute;
+  top: 10%;
+  left: 60%;
+}
+
+.card-img-overlay {
+  height: 100%;
+}
+
+.overlay {
+  height: 100%;
+  background: linear-gradient(0deg, rgb(130,217,211) 0%, rgb(124,214,228) 49%, rgb(43,134,226) 100%);
+  z-index: 0;
+}
+
+#searchBar {
+  width: 50%;
+  height: 10%;
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  border-radius: 50px;
+}
+
+#searchTitle {
+  width: 50%;
+  height: 10%;
+  position: absolute;
+  top: 40%;
+  left: 25%;
+}
+
+#searchButton {
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 77%;
+}
+
+.textContainer {
+  height: 100%;
+  /*background-color: pink;*/
+  overflow-y: scroll;
+}
+
+.imageContainer {
+  background-image: url(../../assets/img/5655614.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+}
+
+.bookName {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 18px;
+}
+
+#rowBody {
+  height: 90%;
+}
+
+#footerRow {
+  height: 10%;
+}
+
+#headerRow {
+  height: 10%;
+}
+
+.authorName {
+  font-size: 18px;
+}
+
+.summaryContainer {
+  max-width: 240px;
+}
+
+.bookObject {
+  max-width: 265px;
+}
+
+.pageName {
+  position: absolute;
+  left: 50%;
+}
+
+#menuContainer {
+  position: absolute;
+  top: 10%;
+  left: 45%;
+}
+
+.exitButton {
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+}
+
