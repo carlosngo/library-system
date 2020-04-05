@@ -1,11 +1,54 @@
 <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    {% block title %}<title>BookCase</title>{% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="../catalog/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../catalog/static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../catalog/static/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="../catalog/static/css/Search-Field-With-Icon.css">
+    <link rel="stylesheet" href="../catalog/static/css/styles.css">
+</head>
+
+<body>
+    {% block navbar %}
+    <div id="hamburgerOverlay" class="overlay">
+        <div class="d-flex flex-column" id="menuContainer">
+            <span style="font-size: 48px;margin-bottom: 50px;" href="{% url 'index' %}">Bookcase</span>
+            <span style="font-size: 36px;" href="{% url 'books' %}">Books</span>
+            <span style="font-size: 36px;" href="{% url 'authors' %}">Authors</span>
+            <span style="font-size: 36px;" href="{% url 'search' %}">Search</span>
+            <span style="font-size: 36px;margin-top: 150px;" href="{% url 'account' %}">Account</span>
+        </div>
+        <button
+            class="btn btn-info exitButton" type="button">X</button>
+    </div>
+    {% endblock %}
+    {% block header %}
+    <div class="row" id="headerRow">
+        <div class="col d-flex">
+            <button class="btn btn-primary" id="hamburger" type="button">Hamburger</button>
+            <span class="pageName" style="font-size: 48px;">Books</span>
+        </div>
+    </div>
+    {% endblock %}
+    {% load static %}
+    <script src="../catalog/static/js/jquery.min.js"></script>
+    <script src="../catalog/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   {% block title %}<title>Local Library</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <!-- Add additional CSS in static file -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
@@ -32,4 +75,4 @@
     </div>
   </div>
 </body>
-</html>
+</html> -->
