@@ -1,5 +1,13 @@
 from django.contrib import admin
 
+from django.contrib.admin.models import LogEntry
+
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('action', 'content_type', 'user', 'action_time')
+    def action(self, obj):
+        return str(obj)
+    
+admin.site.register(LogEntry, LogEntryAdmin)
 
 from .models import Author, Publisher, Book, BookInstance
 # admin.site.register(Book)
