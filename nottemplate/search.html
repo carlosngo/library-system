@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Frontend</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/Search-Field-With-Icon.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div id="hamburgerOverlay" class="overlay">
+        <div class="d-flex flex-column" id="menuContainer">
+            <span style="font-size: 48px;margin-bottom: 50px;">Bookcase</span>
+            <span style="font-size: 36px;">Books</span>
+            <span style="font-size: 36px;">Authors</span>
+            <span style="font-size: 36px;">Search</span>
+            <span style="font-size: 36px;margin-top: 150px;">Account</span>
+        </div>
+        <button
+            class="btn btn-info exitButton" type="button">X</button>
+    </div>
+    <div class="row" id="headerRow">
+        <div class="col d-flex">
+            <button class="btn btn-primary" id="hamburger" type="button">Hamburger</button>
+            <span class="pageName" style="font-size: 48px;">Search</span>
+        </div>
+    </div>
+    <div class="row" style="padding: 30px;padding-right: 50px;padding-left: 50px;">
+        <div class="col">
+            <div class="search-container">
+                <input type="text" class="search-input" name="search-bar" placeholder="Search...">
+                <button class="btn btn-light search-btn" type="button"> 
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-check filter">
+                <input class="form-check-input" type="checkbox" id="formCheck-1">
+                <label class="form-check-label" for="formCheck-1">Filter 1</label>
+            </div>
+            <div class="form-check filter">
+                <input class="form-check-input" type="checkbox" id="formCheck-1">
+                <label class="form-check-label" for="formCheck-1">Filter 1</label>
+            </div>
+            <div class="form-check filter">
+                <input class="form-check-input" type="checkbox" id="formCheck-1">
+                <label class="form-check-label" for="formCheck-1">Filter 1</label>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 50px;">
+        <div class="col">
+            <div class="searchResultContainer">
+                <span class="searchResult" style="margin-right: 10px;">Book</span>
+                <span class="searchInfo">by Author</span>
+            </div>
+            <div class="searchResultContainer">
+                <span class="searchResult" style="margin-right: 10px;">Book</span>
+                <span class="searchInfo">by Author</span>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
