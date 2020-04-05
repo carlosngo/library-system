@@ -9,11 +9,16 @@ class LogEntryAdmin(admin.ModelAdmin):
     
 admin.site.register(LogEntry, LogEntryAdmin)
 
-from .models import Author, Publisher, Book, BookInstance
+from .models import Author, Publisher, Book, BookInstance, Profile
 # admin.site.register(Book)
 # admin.site.register(Author)
 admin.site.register(Publisher)
 # admin.site.register(BookInstance)
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('last_name', 'first_name', 'id_number', 'email')
+
+admin.site.register(Profile, ProfileAdmin)
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')

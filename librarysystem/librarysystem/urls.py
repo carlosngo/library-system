@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,7 @@ from django.urls import path
 urlpatterns += [
     path('catalog/', include('catalog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', views.register, name='register')
 ]
 
 #Add URL maps to redirect the base URL to our application

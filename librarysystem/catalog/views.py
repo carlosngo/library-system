@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from catalog.models import Book, Author, BookInstance
+from django.contrib.auth.forms import UserCreationForm
+from catalog.models import Book, Author, BookInstance, Profile, User
+
 
 # Create your views here.
 def index(request):
@@ -21,6 +23,8 @@ def index(request):
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
     }
+    # for user in User.objects.all():
+    #     Profile.objects.get_or_create(user=user)
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
