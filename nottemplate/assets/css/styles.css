@@ -115,3 +115,18 @@ body, html {
   height: 50px;
 }
 
+#formContainer {
+  width: 50%;
+  height: 100%;
+}
+
+#imageContainer {
+  width: 50%;
+  height: 100%;
+}
+
+.icon {
+  height: 40%;
+  width: 50%;
+}
+
