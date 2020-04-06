@@ -1,9 +1,15 @@
+@font-face {
+  font-family: 'Raleway', sans-serif;
+  src: url('https://fonts.google.com/specimen/Raleway');
+  }
+
 body, html {
   height: 100%;
+  font-family: 'Raleway';
 }
 
 #background {
-  background-image: url(../../assets/img/background.jpg);
+  background-image: url(../../static/img/background.jpg);
   height: 100%;
   background-position: center;
   background-size: cover;

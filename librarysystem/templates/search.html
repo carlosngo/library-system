@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% extends "base_generic.html" %}
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -22,14 +23,16 @@
             <span style="font-size: 36px;margin-top: 150px;">Account</span>
         </div>
         <button
-            class="btn btn-info exitButton" type="button">X</button>
+            class="btn btn-info exitButton" type="button" onclick="toggleNav()">X</button>
     </div>
     <div class="row" id="headerRow">
         <div class="col d-flex">
-            <button class="btn btn-primary" id="hamburger" type="button">Hamburger</button>
+            <button class="btn btn-primary" id="hamburger" type="button" onclick="toggleNav()">Hamburger</button>
             <span class="pageName" style="font-size: 48px;">Search</span>
         </div>
-    </div>
+    </div> -->
+
+    {% block content %}
     <div class="row" style="padding: 30px;padding-right: 50px;padding-left: 50px;">
         <div class="col">
             <div class="search-container">
@@ -54,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="row" style="padding: 50px;">
+    <div class="row" style="padding: 50px; overflow: scroll;">
         <div class="col">
             <div class="searchResultContainer">
                 <span class="searchResult" style="margin-right: 10px;">Book</span>
@@ -66,8 +69,11 @@
             </div>
         </div>
     </div>
-    <script src="../catalog/static/js/jquery.min.js"></script>
+
+    {% endblock %}
+    <!-- <script src="../catalog/static/js/jquery.min.js"></script>
+    <script src="../catalog/static/js/toggle.js"></script>
     <script src="../catalog/static/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
-</html>
+</html> -->

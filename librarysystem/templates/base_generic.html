@@ -24,19 +24,23 @@
             <span style="font-size: 36px;margin-top: 150px;" href="{% url 'account' %}">Account</span>
         </div>
         <button
-            class="btn btn-info exitButton" type="button">X</button>
+            class="btn btn-info exitButton" type="button" onclick="toggleNav()">X</button>
     </div>
     {% endblock %}
     {% block header %}
     <div class="row" id="headerRow">
         <div class="col d-flex">
-            <button class="btn btn-primary" id="hamburger" type="button">Hamburger</button>
+            <button class="btn btn-primary" id="hamburger" type="button" onclick="toggleNav()">Hamburger</button>
             <span class="pageName" style="font-size: 48px;">Books</span>
         </div>
     </div>
     {% endblock %}
+
+    {% block content %}{% endblock %}
+    
     {% load static %}
     <script src="../catalog/static/js/jquery.min.js"></script>
+    <script src="../catalog/static/js/toggle.js"></script>
     <script src="../catalog/static/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
