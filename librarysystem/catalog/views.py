@@ -9,6 +9,8 @@ from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from catalog.models import Author
+from django.contrib.auth.forms import UserCreationForm
+from catalog.models import Book, Author, BookInstance, Profile, User
 
 import datetime
 
