@@ -27,7 +27,8 @@ from django.urls import path
 urlpatterns += [
     path('catalog/', include('catalog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    path('registerManager/', views.registerManager, name='registerManager')
 ]
 
 #Add URL maps to redirect the base URL to our application

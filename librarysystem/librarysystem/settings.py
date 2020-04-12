@@ -39,6 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'rest_framework',
+    'axes',
+]
+
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'librarysystem.urls'
@@ -103,6 +112,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AXES_COOLOFF_TIME = 1
+
+SESSION_COOKIE_AGE = 60 * 30
+
+SESSION_SAVE_EVERY_REQUEST = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
