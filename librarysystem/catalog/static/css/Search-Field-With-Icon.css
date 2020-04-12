@@ -22,20 +22,13 @@
   color: #919693;
 }
 
-.searchResult {
-  font-size: 36px;
-  font-weight: bold;
+.review-input {
+  width: 100%;
+  min-height: 100px;
+  max-height: 100px;
+  overflow: scroll;
 }
 
-.searchInfo {
-  font-size: 18px;
-}
-
-.searchResultContainer {
-  margin-bottom: 50px;
-}
-
-.filter {
-  font-size: 18px;
+.btn.btn-primary.delete-button {
 }
 
