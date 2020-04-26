@@ -1,4 +1,44 @@
-{% extends "base_generic.html" %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Frontend</title>
+    <link rel="stylesheet" href="../../catalog/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../catalog/static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="../../catalog/static/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="../../catalog/static/css/Search-Field-With-Icon.css">
+    <link rel="stylesheet" href="../../catalog/static/css/styles.css">
+</head>
+
+<body>
+    <div class="login-clean">
+        <form method="post">
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration">
+                <img class="icon" src="../../catalog/static/img/account.png">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">Log In</button>
+            </div>
+            <a class="forgot" href="#">Don't have an account?</a>
+            <a class="forgot" href="#">Forgot your email or password?</a>
+        </form>
+    </div>
+    <script src="../../catalog/static/js/jquery.min.js"></script>
+    <script src="../../catalog/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+<!-- {% extends "base_generic.html" %}
 
 {% block content %}
 
@@ -34,4 +74,4 @@
   {# Assumes you setup the password_reset view in your URLconf #}
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
   
-{% endblock %}
+{% endblock %} -->
