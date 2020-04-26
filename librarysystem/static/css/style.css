@@ -1,0 +1,13 @@
+.delete-button {
+  background-color: #b84a39;
+}
+
+.delete-button:hover {
+  background-color: #752519;
+}
+
+.modal-body {
+  overflow: scroll;
+  max-height: 350px;
+}
+

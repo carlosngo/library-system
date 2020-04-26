@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+{% block header %}
+<h1 class="text-center text-white d-none d-lg-block site-heading"><span class="text-primary site-heading-upper mb-3">Xavier's school for gifted youngsters</span><span class="site-heading-lower">Digital Library</span></h1>
+{% endblock %}
+{% block content %}
+    <section class="page-section clearfix">
+        <div class="container">
+            <div class="intro"><img class="img-fluid intro-img mb-3 mb-lg-0 rounded" src="../catalog/static/img/intro.jpg">
+                <div class="intro-text left-0 text-centerfaded p-5 rounded bg-faded text-center">
+                    <h2 class="section-heading mb-4"><span class="section-heading-upper">Books</span><span class="section-heading-lower">Worth Reading</span></h2>
+                    <p class="mb-3">A digital library, digital repository, or digital collection, is an online database of digital objects that can include text, still images, audio, video, or other digital media formats. Objects can consist of digitized content like
+                        print or photographs, as well as originally produced digital content like word processor files or social media posts. In addition to storing content, digital libraries provide means for organizing, searching, and retrieving the
+                        content contained in the collection.</p>
+                    <div class="mx-auto intro-button"><a class="btn btn-primary d-inline-block mx-auto btn-xl" role="button" href="Books.html">Discover Books Now!</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+<!-- {% load has_group %}
+
+{% block content %}
+  <h1>Local Library Home</h1>
+  <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Books:</strong> {{ num_books }}</li>
+    <li><strong>Copies:</strong> {{ num_instances }}</li>
+    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+  </ul>
+{% endblock %} -->
+
+
+<!-- {% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Local Library Home</h1>
+  <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Books:</strong> {{ num_books }}</li>
+    <li><strong>Copies:</strong> {{ num_instances }}</li>
+    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+  </ul>
+
+  <p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+{% endblock %} -->
