@@ -19,6 +19,9 @@ from catalog.models import Book, Author, BookInstance, Publisher
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10
+    context_object_name = 'book_list'
+    template_name = 'books.html'
 
 class BookDetailView(generic.DetailView):
     model = Book

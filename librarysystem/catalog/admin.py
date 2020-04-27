@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
-from .models import Author, Publisher, Book, BookInstance, Profile
+from .models import Author, Publisher, Book, BookInstance, Profile, Review
 
 class LogEntryAdmin(admin.ModelAdmin):
     list_display = ('action', 'content_type', 'user', 'action_time')
@@ -24,6 +24,11 @@ class AuthorAdmin(admin.ModelAdmin):
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
 
 admin.site.register(Author, AuthorAdmin)
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('book', 'reviewer', 'text') 
+
+admin.site.register(Review, ReviewAdmin)
 
 class BooksInstanceInline(admin.TabularInline):
     model = BookInstance
