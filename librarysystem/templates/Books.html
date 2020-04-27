@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" role="dialog" tabindex="-1" id="add-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -90,21 +90,26 @@
         </div>
     </section>
     <section class="page-section about-heading">
-        <div class="container"><img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="../catalog/static/img/about.jpg">
-            <div class="about-heading-content">
-                <div class="row">
-                    <div class="col-lg-10 col-xl-9 mx-auto">
-                        <div class="bg-faded rounded p-5">
-                            <h2 class="section-heading mb-4"><span class="section-heading-upper">Want something Specific?</span><span class="section-heading-lower">&nbsp;Filter your results</span></h2>
-                            <div class="search-container"><input type="text" class="search-input" name="search-bar" placeholder="Search..."><button class="btn btn-light search-btn" type="button"> <i class="fa fa-search"></i></button></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Available</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Borrowed</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Due for Return</label></div>
+        {% if error %}
+            <p style="color: red;">Please submit a search term.</p>
+        {% endif %}
+        <form name="myform" method="GET" action="{% url 'search' %}">
+            <div class="container"><img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="../catalog/static/img/about.jpg">
+                <div class="about-heading-content">
+                    <div class="row">
+                        <div class="col-lg-10 col-xl-9 mx-auto">
+                            <div class="bg-faded rounded p-5">
+                                <h2 class="section-heading mb-4"><span class="section-heading-upper">Want something Specific?</span><span class="section-heading-lower">&nbsp;Filter your results</span></h2>
+                                <div class="search-container"><input type="text" class="search-input" name="search-bar" id="search-bar" placeholder="Search..."><button class="btn btn-light search-btn" type="button"> <i class="fa fa-search"></i></button></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Available</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Borrowed</label></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Due for Return</label></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </section>
     <footer class="footer text-faded text-center py-5">
         <div class="container">
