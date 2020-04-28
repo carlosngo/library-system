@@ -76,6 +76,7 @@ class BookInstance(models.Model):
         return False
 
 class Author(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
