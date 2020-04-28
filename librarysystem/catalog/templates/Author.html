@@ -100,6 +100,7 @@
                 </div>
             </div>
         </div>
+
         <div class="modal fade" role="dialog" tabindex="-1" id="delete-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -108,7 +109,11 @@
                     <div class="modal-body d-flex flex-grow-1">
                         <p>Are you sure you want to delete this author?</p>
                     </div>
-                    <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary delete-button" type="button">Delete Author</button></div>
+                    <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary delete-button" type="submit">Delete Author</button></div>
+                            <!-- <input type="submit" value="Yes, delete."> -->
+                    </form>
                 </div>
             </div>
         </div>
