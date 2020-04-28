@@ -1,7 +1,4 @@
 {% extends "base_generic.html" %}
-{% block header %}
-<h1 class="text-center text-white d-none d-lg-block site-heading"><span class="text-primary site-heading-upper mb-3">Xavier's school for gifted youngsters</span><span class="site-heading-lower">Digital Library</span></h1>
-{% endblock %}
 {% block content %}
 {% load static %}
 <section class="page-section cta">
@@ -14,7 +11,7 @@
                     {% if book_list %}
                     <ul class="list-unstyled mx-auto list-hours mb-5 text-left">
                         {% for book in book_list %}
-                        <li class="d-flex list-unstyled-item list-hours-item"><a href="Book.html">{{ book.name }}</a><span class="ml-auto">by {{ book.author.first_name }}&nbsp;{{ book.author.last_name }}</span></li>
+                        <li class="d-flex list-unstyled-item list-hours-item"><a href="{{ book.get_absolute_url }}">{{ book.name }}</a><span class="ml-auto">by {{ book.author.first_name }}&nbsp;{{ book.author.last_name }}</span></li>
                         {% endfor %}
                         <!-- <li class="d-flex list-unstyled-item list-hours-item"><a href="Book.html"> Book </a><span class="ml-auto">By Author</span></li>
                         <li class="d-flex list-unstyled-item list-hours-item"><a href="Book.html"> Book </a><span class="ml-auto">By Author</span></li>

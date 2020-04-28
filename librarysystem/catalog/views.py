@@ -41,6 +41,8 @@ def search(request):
         
 class BookDetailView(generic.DetailView):
     model = Book
+    context_object_name = 'book_details'
+    template_name = 'book_details.html'
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
@@ -99,6 +101,8 @@ def renew_book_librarian(request, pk):
 
     return render(request, 'catalog/book_renew_librarian.html', context)
 
+def book_details(request):
+    return BookDetailView.as_view()
 
 class AuthorCreate(CreateView):
     model = Author

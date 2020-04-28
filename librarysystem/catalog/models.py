@@ -42,9 +42,9 @@ class Book(models.Model):
     def __str__(self):
         return self.name
     
-    # def get_absolute_url(self):
-    #     """Returns the url to access a detail record for this book."""
-    #     return reverse('book-detail', args=[str(self.id)])
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this book."""
+        return "/catalog/books/%s" % self.id
 
 
 class BookInstance(models.Model):
