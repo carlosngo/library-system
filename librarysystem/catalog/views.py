@@ -17,13 +17,19 @@ from catalog.models import Book, Author, BookInstance, Profile, User
 import datetime
 
 # Create your views here.
-from catalog.models import Book, Author, BookInstance, Publisher
+from catalog.models import Book, Author, Review, BookInstance, Publisher
 
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 10
     context_object_name = 'book_list'
     template_name = 'books.html'
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 10
+    context_object_name = 'author_list'
+    template_name = 'Authors.html'
 
 def search(request):
     # query = self.request.GET.get('search-bar')
@@ -37,12 +43,22 @@ def search(request):
         else:
             books = Book.objects.filter(name__icontains=search)
             return render(request, 'search_results.html', {'books': books, 'query':search})
-        return render(request, 'Books.html', {'error': error})
+    return render(request, 'Error.html', {'error': error})
         
 class BookDetailView(generic.DetailView):
     model = Book
     context_object_name = 'book_details'
     template_name = 'book_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['book_details'] = Review.objects.filter(id__icontains=self.request.id)
+        return context
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+    context_object_name = 'author_details'
+    template_name = 'Author.html'
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
