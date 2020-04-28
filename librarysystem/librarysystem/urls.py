@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,9 +27,11 @@ from django.urls import path
 urlpatterns += [
     path('catalog/', include('catalog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', views.register, name='register'),
+    path('registerManager/', views.registerManager, name='registerManager')
 ]
 
-#Add URL maps to redirect the base URL to our application
+#base URL
 from django.views.generic import RedirectView
 urlpatterns += [
     path('', RedirectView.as_view(url='catalog/', permanent=True)),
@@ -39,3 +42,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+#site auth (user management)
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
