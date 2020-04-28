@@ -18,7 +18,9 @@
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %"></script>
         <script src="{% static 'js/current-day.js' %"></script>
     </head>
+
     <body style="background:linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url('../catalog/static/img/bg.jpg');">
+
         {% block header %}{% endblock}
         
         <nav class="navbar navbar-light navbar-expand-lg bg-dark py-lg-4" id="mainNav">
@@ -34,7 +36,9 @@
             </div>
             </div>
         </nav>
+        
         {% block content %}{% endblock %}
+
         <footer class="footer text-faded text-center py-5">
             <div class="container">
                 <p class="m-0 small">Copyright&nbsp;©&nbsp;Coronia Garay Ngo</p>

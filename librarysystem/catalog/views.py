@@ -8,6 +8,8 @@ from django.urls import reverse
 from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.http import HttpResponse
+from django.shortcuts import render
 from catalog.models import Author
 from django.contrib.auth.forms import UserCreationForm
 from catalog.models import Book, Author, BookInstance, Profile, User
@@ -19,10 +21,28 @@ from catalog.models import Book, Author, BookInstance, Publisher
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10
+    context_object_name = 'book_list'
+    template_name = 'books.html'
 
+def search(request):
+    # query = self.request.GET.get('search-bar')
+    # object_list = Book.objects.filter(Q(name__icontains=query))
+    # # return object_list
+    error = False
+    if 'search-bar' in request.GET and request.GET['search-bar']:
+        search = request.GET['search-bar']
+        if not search:
+            error = True
+        else:
+            books = Book.objects.filter(name__icontains=search)
+            return render(request, 'search_results.html', {'books': books, 'query':search})
+        return render(request, 'Books.html', {'error': error})
+        
 class BookDetailView(generic.DetailView):
     model = Book
-    paginate_by = 10
+    context_object_name = 'book_details'
+    template_name = 'book_details.html'
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
@@ -81,6 +101,8 @@ def renew_book_librarian(request, pk):
 
     return render(request, 'catalog/book_renew_librarian.html', context)
 
+def book_details(request):
+    return BookDetailView.as_view()
 
 class AuthorCreate(CreateView):
     model = Author
