@@ -140,6 +140,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
     
+def profile(request):
+  return render(request, 'profile.html', {})
+
+
 def register(request):
     form = RegisterForm(request.POST)
     if form.is_valid():

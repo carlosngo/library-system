@@ -1,37 +1,52 @@
 {% extends "base_generic.html" %}
 {% block content %}
 {% load static %}
-<div class="login-clean">
-  {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-  {% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <h2 class="sr-only">Login Form</h2>
-    <div class="illustration">
-        <img class="icon" src="{% static 'img/account.png' %}">
-    </div>
-    <div class="form-group">
-      {{form.username}}
-        <!-- <input class="form-control" type="email" name="email" placeholder="Email"> -->
-    </div>
-    <div class="form-group">
-      {{form.password}}
-        <!-- <input class="form-control" type="password" name="password" placeholder="Password"> -->
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary btn-block" type="submit">Log In</button>
-    </div>
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
-  <a class="forgot" href="{% url 'register' %}">Don't have an account?</a>
-</div>
+<br><br><br>
+<section class="page-section about-heading">
+  <div class="container">
+      <div class="about-heading-content">
+          <div class="row">
+              <div class="col-lg-10 col-xl-9 mx-auto">
+                  <div class="bg-faded rounded p-5">
+                      <h2 class="section-heading mb-4"><span class="text-center section-heading-upper mb-5" style="font-size: 30px;">Log In</span></h2>
+                      {% if form.errors %}
+                      <p style="color:red">Your username and password didn't match. Please try again.</p>
+                      {% endif %}
+                      {% if next %}
+                        {% if user.is_authenticated %}
+                        <p>Your account doesn't have access to this page. To proceed,
+                          please login with an account that has access.</p>
+                        {% else %}
+                        <p>Please login to see this page.</p>
+                        {% endif %}
+                      {% endif %}
+                      <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>{{form.username}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Password</td>
+                                        <td>{{form.password}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex flex-column justify-content-around"><button class="btn btn-primary" type="submit">Log In</button></div>
+                      </form>
+                      <br>
+                      <a class="text-center d-block" href="{% url 'register' %}" style="color: rgb(0,0,0);">Don't have an account?</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
 {% endblock %}
