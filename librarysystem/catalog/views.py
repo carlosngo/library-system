@@ -13,6 +13,7 @@ from django.shortcuts import render
 from catalog.models import Author
 from django.contrib.auth.forms import UserCreationForm
 from catalog.models import Book, Author, BookInstance, Profile, User
+from django.contrib.admin.models import LogEntry
 
 import datetime
 
@@ -128,6 +129,11 @@ class BookUpdate(UpdateView):
 class BookDelete(DeleteView):
     model = Book
     success_url = reverse_lazy('books')
+
+class LogListView(generic.ListView):
+  model = LogEntry
+  context_object_name = 'log_list'
+  template_name = 'logs.html'
 
 from .forms import RegisterForm
 from django.contrib.auth import logout

@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+{% block content %}
+{% load static %}
+{% load has_group %}
+<br><br>
+<section class="page-section about-heading">
+    <div class="container">
+        <div class="about-heading-content">
+            <div class="row">
+                <div class="col-lg-10 col-xl-9 mx-auto">
+                    <div class="bg-faded rounded p-5">
+                        <h2 class="section-heading mb-4"><span class="text-center section-heading-upper mb-5" style="font-size: 30px;">System Logs</span></h2>
+                        
+                        {% if user|has_group:"Administrators" %}
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Content Type</th>
+                                        <th>User</th>
+                                        <th>Action Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  {% if log_list %}
+                                    {% for log in log_list %}
+                                    <tr>
+                                      <td>{{ log }}</td>
+                                      <td>{{ log.content_type }}</td>
+                                      <td>{{ log.user }}</td>
+                                      <td>{{ log.action_time }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                  {% else %}
+                                  <p>There are no logs recorded.</p>
+                                  {% endif %}       
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p>You have no access to this content</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
