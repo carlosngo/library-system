@@ -19,10 +19,10 @@
             <div
                 class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav mx-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="Books.html">Books</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="Authors.html">Authors</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="Account.html">Account</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'books' %}">Books</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Authors</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'index' %}">Account</a></li>
                 </ul>
         </div>
         </div>
@@ -33,15 +33,25 @@
                 <div class="col-xl-9 mx-auto">
                     <div class="cta-inner text-center rounded">
                         <h2 class="section-heading mb-5"><span class="section-heading-upper">Check our collection</span><span class="section-heading-lower">Authors</span></h2>
+                        {% if author_list %}
                         <ul class="list-unstyled mx-auto list-hours mb-5 text-left">
-                            <li class="d-flex list-unstyled-item list-hours-item"><a href="Author.html"> Last Name </a><span class="ml-auto">First Name</span></li>
-                            <li class="d-flex list-unstyled-item list-hours-item"><a href="Author.html"> Last Name </a><span class="ml-auto">First Name</span></li>
-                            <li class="d-flex list-unstyled-item list-hours-item"><a href="Author.html"> Last Name </a><span class="ml-auto">First Name</span></li>
-                            <li class="d-flex list-unstyled-item list-hours-item"><a href="Author.html"> Last Name </a><span class="ml-auto">First Name</span></li>
-                        </ul><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#add-modal">Add More Authors</button></div>
+                            {% for author in author_list %}
+                            <li class="d-flex list-unstyled-item list-hours-item">
+                                <a href="{{ book.get_absolute_url }}">{{ author.last_name }}</a>, <span class="ml-auto">{{author.first_name}}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>There are no authors registered in the library.</p>
+                        {% endif %} 
+
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#add-modal">Add More Authors</button></div>
                 </div>
             </div>
         </div>
+    {% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
         <div class="modal fade" role="dialog" tabindex="-1" id="add-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -53,7 +63,9 @@
                                 <thead>
                                     <tr></tr>
                                 </thead>
-                                <tbody>
+                                {{ form.as_table }}
+                                <!-- ****SOMETHING IS MISSING -> STILL LOOKING FOR IT ***** -->
+                                <!-- <tbody>
                                     <tr>
                                         <td>First Name</td>
                                         <td><input type="text"></td>
@@ -66,14 +78,16 @@
                                         <td>Photo</td>
                                         <td><input type="file"></td>
                                     </tr>
-                                </tbody>
+                                </tbody> -->
                             </table>
                         </div>
                     </div>
-                    <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+                    <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="submit">Save</button></div>
                 </div>
             </div>
         </div>
+    </form>
+        {% endblock %}
     </section>
     <section class="page-section about-heading">
         <div class="container"><img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="../catalog/static/img/about.jpg">

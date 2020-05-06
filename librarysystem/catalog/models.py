@@ -33,7 +33,7 @@ class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
     isbn = models.CharField('ISBN', max_length=13, default='0000000000000', help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     name = models.CharField('Name', max_length=200)
-    summary = models.TextField('Review', max_length=1000, help_text='Enter a brief summary of the book')
+    summary = models.TextField('Review', max_length=1000, help_text='Enter a brief summary of the book', null=True, blank=True)
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     publisher = models.ForeignKey('Publisher', on_delete=models.SET_NULL, null=True)
     publish_date=models.DateField('Date Published', null=True, blank=True)

@@ -19,10 +19,10 @@
             <div
                 class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav mx-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="Books.html">Books</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="Authors.html">Authors</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="Account.html">Account</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'books' %}">Books</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'authors' %}">Authors</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'index' %}">Account</a></li>
                 </ul>
         </div>
         </div>
@@ -39,7 +39,7 @@
                         <ul class="list-unstyled mx-auto list-hours mb-5 text-left">
                             {% for book in book_list %}
                             <li class="d-flex list-unstyled-item list-hours-item">
-                                <a href="{{ book.get_absolute_url }}">{{ book.name }}</a> <span class="ml-auto">By ({{book.author}})</span>
+                                <a href="{{ book.get_absolute_url }}">{{ book.name }}</a> <span class="ml-auto">by {{book.author}}</span>
                             </li>
                             {% endfor %}
                         </ul>
@@ -71,24 +71,43 @@
                                     </tr>
                                     <tr>
                                         <td>Author</td>
-                                        <td><select><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></td>
+                                        <td><select><optgroup label="This is a group">
+                                            <option value="12" selected="">This is item 1</option>
+                                            <option value="13">This is item 2</option>
+                                            <option value="14">This is item 3</option></
+                                            optgroup>
+                                        </select></td>
                                     </tr>
+
+                                    <!-- **************PLEASE REMOVE THE PART ENCLOSED********** -->
                                     <tr>
                                         <td>Cover</td>
                                         <td><input type="file"></td>
                                     </tr>
+                                    <!-- **************PLEASE REMOVE THE PART ENCLOSED********** -->
                                     <tr>
                                         <td>Publisher</td>
-                                        <td><input type="text"></td>
+                                        <td>
+                                            <select><optgroup label="This is a group">
+                                                <option value="12" selected="">This is item 1</option>
+                                                <option value="13">This is item 2</option>
+                                                <option value="14">This is item 3</option></
+                                                optgroup>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>ISBN</td>
                                         <td><input type="text"></td>
                                     </tr>
+                                    <!-- **************PLEASE CHANGE TO REVIEW********** -->
+                                    <!-- **************OR REMOVE THE ENCLOSED PART********** -->
                                     <tr>
                                         <td>Summary</td>
                                         <td><input type="text" class="review-input"></td>
                                     </tr>
+                                    <!-- **************OR REMOVE THE ENCLOSED PART********** -->
+                                    <!-- **************PLEASE CHANGE TO REVIEW********** -->
                                 </tbody>
                             </table>
                         </div>
@@ -102,7 +121,7 @@
         {% if error %}
             <p style="color: red;">Please submit a search term.</p>
         {% endif %}
-        <form name="myform" method="GET" action="{% url 'search' %}">
+        <form name="myform" method="GET" action=".">
             <div class="container"><img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="../catalog/static/img/about.jpg">
                 <div class="about-heading-content">
                     <div class="row">
