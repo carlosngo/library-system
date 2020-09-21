@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 {% block content %}
 {% load static %}
+{% load has_group %}
 <section class="page-section cta">
     <div class="container">
         <div class="row">
@@ -23,54 +24,13 @@
                     <p>There are no books in the library.</p>
                     {% endif %}       
                     
-                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#add-modal">Add More Books</button></div>
+                    {% if user|has_group:"Managers" %}
+                    <button class="btn btn-primary" type="button"><a href="{% url 'addBook' %}">Add More Books</a></button></div>
+                    {% endif %}
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="add-modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Book</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body d-flex flex-grow-1">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr></tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Title</td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td>Author</td>
-                                    <td><select><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></td>
-                                </tr>
-                                <tr>
-                                    <td>Cover</td>
-                                    <td><input type="file"></td>
-                                </tr>
-                                <tr>
-                                    <td>Publisher</td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td>ISBN</td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td>Summary</td>
-                                    <td><input type="text" class="review-input"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
+    
 </section>
 <section class="page-section about-heading">
     <div class="container"><img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg' %}">

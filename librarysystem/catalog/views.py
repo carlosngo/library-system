@@ -135,7 +135,7 @@ class LogListView(generic.ListView):
   context_object_name = 'log_list'
   template_name = 'logs.html'
 
-from .forms import RegisterForm
+from .forms import RegisterForm, AddBookForm
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from catalog.models import Book, Author, BookInstance
@@ -148,7 +148,6 @@ from django.http import HttpResponse
     
 def profile(request):
   return render(request, 'profile.html', {})
-
 
 def register(request):
     form = RegisterForm(request.POST)
@@ -193,3 +192,21 @@ def registerManager(request):
         managers.user_set.add(user)
         return redirect('/')
     return render(request, 'register_manager.html', {'form': form})
+
+
+def addBook(request):
+    form = AddBookForm(request.POST)
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Managers').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if form.is_valid():
+        book = form.save()
+        book.save()
+        return redirect('/')
+    return render(request, 'add_book.html', {'form': form})
