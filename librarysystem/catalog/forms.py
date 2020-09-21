@@ -3,7 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.forms import ModelForm
-from catalog.models import BookInstance
+from catalog.models import BookInstance, Book
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -51,3 +51,13 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('id_number', 'username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class BookForm(ModelForm):
+    class Meta:
+        model = Book
+        fields = ('isbn', 'name', 'author', 'publisher', 'publish_date', 'callnumber')
+
+class BookInstanceForm(ModelForm):
+    class Meta:
+        model = BookInstance
+        fields = ('book', 'due_back', 'borrower', 'status')

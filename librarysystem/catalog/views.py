@@ -135,7 +135,7 @@ class LogListView(generic.ListView):
   context_object_name = 'log_list'
   template_name = 'logs.html'
 
-from .forms import RegisterForm, AddBookForm
+from .forms import RegisterForm, BookForm, BookInstanceForm
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm
 from catalog.models import Book, Author, BookInstance
@@ -150,27 +150,27 @@ def profile(request):
   return render(request, 'profile.html', {})
 
 def register(request):
-    form = RegisterForm(request.POST)
-    if form.is_valid():
-        user = form.save()
-        user.refresh_from_db()
-        user.profile.first_name = form.cleaned_data.get('first_name')
-        user.profile.last_name = form.cleaned_data.get('last_name')
-        user.profile.email = form.cleaned_data.get('email')
-        user.profile.id_number = form.cleaned_data.get('id_number')
-        user.save()
-        users = Group.objects.get(name='Users') 
-        users.user_set.add(user)
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password1')
-        user = authenticate(request=request, username=username, password=password)
-        login(request, user)
-        return redirect('/')
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
+            user.profile.id_number = form.cleaned_data.get('id_number')
+            user.save()
+            users = Group.objects.get(name='Users') 
+            users.user_set.add(user)
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(request=request, username=username, password=password)
+            login(request, user)
+            return redirect('/')
+    form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
 def registerManager(request):
-    form = RegisterForm(request.POST)
-
     current_user = request.user
     if current_user.is_authenticated == False:
         res = HttpResponse("Unauthorized")
@@ -180,22 +180,45 @@ def registerManager(request):
         res = HttpResponse("Unauthorized")
         res.status_code = 401
         return res
-    if form.is_valid():
-        user = form.save()
-        user.refresh_from_db()
-        user.profile.first_name = form.cleaned_data.get('first_name')
-        user.profile.last_name = form.cleaned_data.get('last_name')
-        user.profile.email = form.cleaned_data.get('email')
-        user.profile.id_number = form.cleaned_data.get('id_number')
-        user.save()
-        managers = Group.objects.get(name='Managers') 
-        managers.user_set.add(user)
-        return redirect('/')
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
+            user.profile.id_number = form.cleaned_data.get('id_number')
+            user.save()
+            managers = Group.objects.get(name='Managers') 
+            managers.user_set.add(user)
+            return redirect('/')
+    form = RegisterForm()
     return render(request, 'register_manager.html', {'form': form})
 
 
 def addBook(request):
-    form = AddBookForm(request.POST)
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Administrators').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save()
+            print(book)
+            book.save()
+            return redirect('/catalog/books/')
+    form = BookForm()
+    return render(request, 'add_book.html', {'form': form})
+
+def deleteBook(request):
+
     current_user = request.user
     if current_user.is_authenticated == False:
         res = HttpResponse("Unauthorized")
@@ -205,8 +228,34 @@ def addBook(request):
         res = HttpResponse("Unauthorized")
         res.status_code = 401
         return res
-    if form.is_valid():
-        book = form.save()
-        book.save()
-        return redirect('/')
-    return render(request, 'add_book.html', {'form': form})
+    Book.objects.filter(id=request.POST.get("book-id", "")).delete()
+    return redirect('/catalog/books')
+
+def updateBook(request):
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Administrators').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    
+    if request.method == 'POST':
+        book = Book.objects.get(id=request.POST.get("book-id", ""))
+        form = BookForm(request.POST)
+        if form.is_valid():
+            updated_book = form.save(commit=False)
+            book.isbn = updated_book.isbn
+            book.name = updated_book.name
+            book.author = updated_book.author
+            book.publisher = updated_book.publisher
+            book.publish_date = updated_book.publish_date
+            book.callnumber = updated_book.callnumber
+            book.save()
+            return redirect(f'/catalog/books/{book.id}')
+    book = Book.objects.get(id=request.GET.get('book-id', ''))
+    form = BookForm(instance=book)
+    return render(request, 'update_book.html', {'form': form, 'bookId': book.id})
+

@@ -25,8 +25,11 @@
                     {% endif %}       
                     
                     {% if user|has_group:"Managers" %}
-                    <button class="btn btn-primary" type="button"><a href="{% url 'addBook' %}">Add More Books</a></button></div>
+                    <form action="{% url 'addBook' %}" method="GET">
+                        <button class="btn btn-primary" type="submit">Add More Books</button>
+                    </form>
                     {% endif %}
+                </div>
             </div>
         </div>
     </div>

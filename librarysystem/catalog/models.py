@@ -30,7 +30,7 @@ def update_profile_signal(sender, instance, created, **kwargs):
     instance.profile.save()
 
 class Book(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, help_text='Unique ID for this particular book across whole library')
     isbn = models.CharField('ISBN', max_length=13, default='0000000000000', help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     name = models.CharField('Name', max_length=200)
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
@@ -49,9 +49,9 @@ class Book(models.Model):
 
 class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
-    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True) 
+    book = models.ForeignKey('Book', on_delete=models.CASCADE) 
     due_back = models.DateField(null=True, blank=True)
-    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
 
 
     LOAN_STATUS = (
@@ -92,7 +92,7 @@ class Author(models.Model):
 class Review(models.Model):
     book = models.ForeignKey('Book', on_delete=models.CASCADE, null=True)
     reviewer = models.ForeignKey('Profile', on_delete=models.CASCADE, null=True)
-    text = models.TextField('Review', max_length=1000, help_text='Enter a brief review of the book')
+    text = models.TextField('Review', max_length=1000, help_text='Enter a brief review of the book', blank=True)
 
     def __str__(self):
         return self.text
