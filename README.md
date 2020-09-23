@@ -4,8 +4,9 @@ A machine project for the course Secure Web Development in De La Salle Universit
 ## How to run the project
 1. Clone the repository.
 2. Open the Terminal in /librarysystem
-3. Run `py manage.py runserver`
-4. Open your browser and enter the URL localhost:8000
+3. Run `pip install -r requirements.txt`
+4. Run `py manage.py runserver`
+5. Open your browser and enter the URL localhost:8000
 
 ## User Roles
 
