@@ -32,4 +32,94 @@
         </div>
     </div>
 </section>
+{% if user.is_authenticated %}
+{% if user|has_group:"Users" %}
+<section class="page-section">
+  <div class="container">
+      <div class="product-item">
+          <div class="d-flex product-item-title">
+              <div class="d-flex mx-auto bg-faded p-5 rounded">
+                  <h2 class="section-heading mb-0"><span class="section-heading-lower">My Borrowed Books</span></h2>
+              </div>
+          </div>
+          <div class="bg-faded p-5 rounded">
+              <div class="table-responsive">
+                  {% if my_books %}
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Book Title</th>
+                              <th>Book Copy ID</th>
+                              <th>Actions</th>
+                              
+                          </tr>
+                      </thead>
+                      <tbody>
+                        
+                          {% for copy in my_books %}
+                          <tr>
+                              <td>{{ copy.book.name }}</td>
+                              <td>{{ copy.id }}</td>
+                              <td>
+                                <form action="{% url 'returnCopy' %}" method="post" style="display:inline">
+                                  {% csrf_token %}
+                                  <input type="hidden" name="book-copy-id" value="{{ copy.id }}"> 
+                                  <button class="btn btn-primary" type="submit">Return</button>
+                                </form>  
+                              </td>
+                              
+                          </tr>
+                          {% endfor %}
+      
+                      </tbody>
+                  </table>
+                  
+                  {% else %}
+                  <p>You have no borrowed books.</p>
+                  {% endif %}       
+              </div>
+             
+          </div>
+      </div>
+  </div>
+</section>
+<section class="page-section">
+  <div class="container">
+      <div class="product-item">
+          <div class="d-flex product-item-title">
+              <div class="d-flex mx-auto bg-faded p-5 rounded">
+                  <h2 class="section-heading mb-0"><span class="section-heading-lower">My Book Reviews</span></h2>
+              </div>
+          </div>
+          <div class="bg-faded p-5 rounded">
+            {% if my_reviews %}
+            <ul class="list-unstyled mx-auto list-hours text-left mt-5">
+                {% for review in my_reviews %}
+                
+                <li class="list-unstyled-item list-hours-item d-flex">
+                    <div><a href="/catalog/books/{{ review.book.id }}">{{ review.book.name }}</a>
+                        <p class="mb-0">{{ review.text }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+                <!-- <li class="list-unstyled-item list-hours-item d-flex">
+                    <div><span>Reviewer Name</span>
+                        <p class="mb-0">Review Details</p>
+                    </div>
+                </li>
+                <li class="list-unstyled-item list-hours-item d-flex">
+                    <div><span>Reviewer Name</span>
+                        <p class="mb-0">Review Details</p>
+                    </div>
+                </li> -->
+            </ul>
+            {% else %}
+            <p>You have no book reviews.</p>
+            {% endif %}
+          </div>
+      </div>
+  </div>
+</section>
+{% endif %}
+{% endif %}
 {% endblock %}

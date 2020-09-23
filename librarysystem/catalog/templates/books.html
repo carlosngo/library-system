@@ -7,12 +7,16 @@
         <div class="row">
             <div class="col-xl-9 mx-auto">
                 <div class="cta-inner text-center rounded">
+                    {% if query %}
+                    <h2 class="section-heading mb-5"><span class="section-heading-upper">Search results for</span><span class="section-heading-lower">{{ query }}</span></h2>
+                    {% else %}
                     <h2 class="section-heading mb-5"><span class="section-heading-upper">Check our collection</span><span class="section-heading-lower">Books</span></h2>
-                    
+                    {% endif %}
+
                     {% if book_list %}
                     <ul class="list-unstyled mx-auto list-hours mb-5 text-left">
                         {% for book in book_list %}
-                        <li class="d-flex list-unstyled-item list-hours-item"><a href="{{ book.get_absolute_url }}">{{ book.name }}</a><span class="ml-auto">by {{ book.author.first_name }}&nbsp;{{ book.author.last_name }}</span></li>
+                        <li class="d-flex list-unstyled-item list-hours-item"><a href="{{ book.get_absolute_url }}">{{ book.name }}</a><span class="ml-auto">by {{ book.author }}</span></li>
                         {% endfor %}
                         <!-- <li class="d-flex list-unstyled-item list-hours-item"><a href="Book.html"> Book </a><span class="ml-auto">By Author</span></li>
                         <li class="d-flex list-unstyled-item list-hours-item"><a href="Book.html"> Book </a><span class="ml-auto">By Author</span></li>
@@ -42,10 +46,14 @@
                 <div class="col-lg-10 col-xl-9 mx-auto">
                     <div class="bg-faded rounded p-5">
                         <h2 class="section-heading mb-4"><span class="section-heading-upper">Want something Specific?</span><span class="section-heading-lower">&nbsp;Filter your results</span></h2>
-                        <div class="search-container"><input type="text" class="search-input" name="search-bar" placeholder="Search..."><button class="btn btn-light search-btn" type="button"> <i class="fa fa-search"></i></button></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Available</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Borrowed</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Due for Return</label></div>
+                        <div class="search-container">
+                            <form action="{% url 'searchBook' %}" method="GET" style="width:100%">
+                                <input type="text" class="search-input" name="query" style="width:90%" placeholder="Search book title...">
+                                <button class="btn btn-light search-btn" type="submit"> <i class="fa fa-search"></i></button>
+                            </form>
+                            
+                        </div>
+                        
                     </div>
                 </div>
             </div>

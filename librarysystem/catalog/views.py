@@ -1,24 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import permission_required
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from catalog.forms import RenewBookForm
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.shortcuts import render
-from catalog.models import Author
-from django.contrib.auth.forms import UserCreationForm
-from catalog.models import Book, Author, BookInstance, Profile, User
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User, Group
+
 from django.contrib.admin.models import LogEntry
 
+from django.urls import reverse
+from django.urls import reverse_lazy
+
+from django.http import HttpResponseRedirect, HttpResponse
+
+from catalog.models import Book, BookInstance, Profile, User, Review
+from catalog.forms import RenewBookForm, RegisterForm, BookForm, BookInstanceForm
+    
 import datetime
 
 # Create your views here.
-from catalog.models import Book, Author, BookInstance, Publisher
 
 class BookListView(generic.ListView):
     model = Book
@@ -31,19 +33,32 @@ def search(request):
     # object_list = Book.objects.filter(Q(name__icontains=query))
     # # return object_list
     error = False
-    if 'search-bar' in request.GET and request.GET['search-bar']:
-        search = request.GET['search-bar']
+    if 'query' in request.GET and request.GET['query']:
+        search = request.GET['query']
         if not search:
             error = True
         else:
             books = Book.objects.filter(name__icontains=search)
-            return render(request, 'search_results.html', {'books': books, 'query':search})
+            return render(request, 'books.html', {'book_list': books, 'query':search})
         return render(request, 'Books.html', {'error': error})
         
 class BookDetailView(generic.DetailView):
     model = Book
-    context_object_name = 'book_details'
     template_name = 'book_details.html'
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context['book_details'] = context['book']
+        context['book_copies'] = BookInstance.objects.filter(book__id=context['book'].id)
+        context['available_book_copies'] = BookInstance.objects.filter(book__id=context['book'].id, status='a')
+        context['reserved_book_copies'] = BookInstance.objects.filter(book__id=context['book'].id, status='r')
+        context['book_reviews'] = Review.objects.filter(book__id=context['book'].id)
+        print(context)
+        # Add in a QuerySet of all the books
+        # context['book_details'] = Book.objects.all()
+        # context
+        return context
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     """Generic class-based view listing books on loan to current user."""
@@ -60,7 +75,6 @@ def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
-    num_authors = Author.objects.count()
     num_visits = request.session.get('num_visits', 0) # Number of visits to this view, as counted in the session variable.s
 
     request.session['num_visits'] = num_visits + 1
@@ -69,7 +83,6 @@ def index(request):
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
-        'num_authors': num_authors,
         'num_visits': num_visits,
     }
 
@@ -103,20 +116,8 @@ def renew_book_librarian(request, pk):
     return render(request, 'catalog/book_renew_librarian.html', context)
 
 def book_details(request):
+    
     return BookDetailView.as_view()
-
-class AuthorCreate(CreateView):
-    model = Author
-    fields = '__all__'
-    initial = {'date_of_death': '05/01/2018'}
-
-class AuthorUpdate(UpdateView):
-    model = Author
-    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
-
-class AuthorDelete(DeleteView):
-    model = Author
-    success_url = reverse_lazy('authors')
 
 class BookCreate(CreateView):
     model = Book
@@ -135,19 +136,13 @@ class LogListView(generic.ListView):
   context_object_name = 'log_list'
   template_name = 'logs.html'
 
-from .forms import RegisterForm, BookForm, BookInstanceForm
-from django.contrib.auth import logout
-from django.contrib.auth.forms import AuthenticationForm
-from catalog.models import Book, Author, BookInstance
-from django.shortcuts import render
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import Group
-from django.http import HttpResponse
-    
 def profile(request):
-  return render(request, 'profile.html', {})
+    current_user = request.user
+    if current_user.groups.filter(name='Users').exists() == True:
+        books = BookInstance.objects.filter(borrower=current_user)
+        reviews = Review.objects.filter(reviewer=current_user.profile)
+        return render(request, 'profile.html', {'my_books': books, 'my_reviews': reviews})
+    return render(request, 'profile.html', {})
 
 def register(request):
     if request.method == 'POST':
@@ -167,6 +162,8 @@ def register(request):
             user = authenticate(request=request, username=username, password=password)
             login(request, user)
             return redirect('/')
+        else:
+            return render(request, 'register.html', {'form': form})        
     form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
@@ -193,6 +190,8 @@ def registerManager(request):
             managers = Group.objects.get(name='Managers') 
             managers.user_set.add(user)
             return redirect('/')
+        else:
+            return render(request, 'register_manager.html', {'form': form})
     form = RegisterForm()
     return render(request, 'register_manager.html', {'form': form})
 
@@ -214,6 +213,8 @@ def addBook(request):
             print(book)
             book.save()
             return redirect('/catalog/books/')
+        else:
+            return render(request, 'add_book.html', {'form': form})
     form = BookForm()
     return render(request, 'add_book.html', {'form': form})
 
@@ -255,7 +256,84 @@ def updateBook(request):
             book.callnumber = updated_book.callnumber
             book.save()
             return redirect(f'/catalog/books/{book.id}')
+        else:
+            return render(request, 'update_book.html', {'form': form, 'bookId': book.id})
     book = Book.objects.get(id=request.GET.get('book-id', ''))
     form = BookForm(instance=book)
     return render(request, 'update_book.html', {'form': form, 'bookId': book.id})
 
+def addReview(request):
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Users').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    book = Book.objects.get(id=request.POST.get("book-id", ""))
+    text = request.POST.get("review", "")
+    review = Review(book=book, reviewer=current_user.profile, text=text)
+    review.save()
+    return redirect(f'/catalog/books/{book.id}')
+
+def addCopy(request):
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Managers').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    book = Book.objects.get(id=request.POST.get("book-id", ""))
+    copy = BookInstance(book=book)
+    copy.save()
+    return redirect(f'/catalog/books/{book.id}')
+
+def deleteCopy(request):
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Managers').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    BookInstance.objects.filter(id=request.POST.get("book-copy-id", "")).delete()
+    return redirect(f'/catalog/books/{request.POST.get("book-id", "")}')
+
+def borrowCopy(request):
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Users').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    copy = BookInstance.objects.get(id=request.POST.get("book-copy-id", ""))
+    copy.borrower = current_user
+    copy.status = 'r'
+    copy.save()
+    return redirect(f'/catalog/books/{request.POST.get("book-id", "")}')
+
+def returnCopy(request):
+    current_user = request.user
+    if current_user.is_authenticated == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    if current_user.groups.filter(name='Users').exists() == False:
+        res = HttpResponse("Unauthorized")
+        res.status_code = 401
+        return res
+    copy = BookInstance.objects.get(id=request.POST.get("book-copy-id", ""))
+    copy.borrower = None
+    copy.status = 'a'
+    copy.save()
+    return redirect(request.META['HTTP_REFERER'])

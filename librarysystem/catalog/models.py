@@ -8,12 +8,6 @@ import uuid
 
 # Create your models here.
 
-class Publisher(models.Model):
-	name = models.CharField(max_length=200, help_text='Please enter the publisher name.')
-	
-	def __str__(self):
-		return self.name
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, blank=True)
@@ -31,11 +25,11 @@ def update_profile_signal(sender, instance, created, **kwargs):
 
 class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, help_text='Unique ID for this particular book across whole library')
-    isbn = models.CharField('ISBN', max_length=13, default='0000000000000', help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
+    isbn = models.CharField('ISBN', max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     name = models.CharField('Name', max_length=200)
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    publisher = models.ForeignKey('Publisher', on_delete=models.SET_NULL, null=True)
-    publish_date=models.DateField('Date Published', null=True, blank=True)
+    author = models.CharField('Author', max_length=200)
+    publisher = models.CharField('Publisher', max_length=200)
+    publish_date = models.DateField('Date Published')
     callnumber = models.CharField('Call Number', max_length=3, help_text='3-digit <a href="https://www.library.illinois.edu/infosci/research/guides/dewey>Call Number</a>')
     
     
@@ -50,7 +44,7 @@ class Book(models.Model):
 class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
     book = models.ForeignKey('Book', on_delete=models.CASCADE) 
-    due_back = models.DateField(null=True, blank=True)
+    due_back = models.DateField(default=None, null=True, blank=True)
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True, blank=True)
 
 
@@ -73,21 +67,6 @@ class BookInstance(models.Model):
         if self.due_back and date.today() > self.due_back:
             return True
         return False
-
-class Author(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Died', null=True, blank=True)
-
-    class Meta:
-        ordering = ['last_name', 'first_name']
-
-    # def get_absolute_url(self):
-    #     return reverse('author-detail', args=[str(self.id)])
-
-    def __str__(self):
-        return f'{self.last_name}, {self.first_name}'
 
 class Review(models.Model):
     book = models.ForeignKey('Book', on_delete=models.CASCADE, null=True)

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'catalog',
     'rest_framework',
     'axes',
+    'reset_migrations',
 ]
 
 AUTHENTICATION_BACKENDS = [

@@ -13,13 +13,16 @@ urlpatterns = [
     path('books/create/', views.addBook, name='addBook'),
     path('books/delete/', views.deleteBook, name='deleteBook'),
     path('books/update/', views.updateBook, name='updateBook'),
-    path('search_results/', views.search),
+    path('books/search', views.search, name='searchBook'),
+    path('books/review/', views.addReview, name='addReview'),
+    path('books/addCopy/', views.addCopy, name='addCopy'),
+    path('books/deleteCopy/', views.deleteCopy, name='deleteCopy'),
+    path('books/borrowCopy/', views.borrowCopy, name='borrowCopy'),
+    path('books/returnCopy/', views.returnCopy, name='returnCopy'),
+    
     
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
     path('books/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
-    path('author/create/', views.AuthorCreate.as_view(), name='author_create'),
-    path('author/<uuid:pk>/update/', views.AuthorUpdate.as_view(), name='author_update'),
-    path('author/<uuid:pk>/delete/', views.AuthorDelete.as_view(), name='author_delete'),
     
     path('profile/', views.profile, name='profile'),
     path('register/', views.register, name='register'),
