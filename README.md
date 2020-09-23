@@ -10,13 +10,13 @@ A machine project for the course Secure Web Development in De La Salle Universit
 ## User Roles
 
 ### Administrator
-Username: admin
+Username: admin <br/>
 Password: p@ssw0rd123
 
 ### Manager
-Username: manager
+Username: manager <br/>
 Password: p@ssw0rd123
 
 ### Student/Teacher
-Username: user
+Username: user <br/>
 Password: p@ssw0rd123
