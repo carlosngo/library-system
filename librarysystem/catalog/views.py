@@ -202,7 +202,7 @@ def addBook(request):
         res = HttpResponse("Unauthorized")
         res.status_code = 401
         return res
-    if current_user.groups.filter(name='Administrators').exists() == False:
+    if current_user.groups.filter(name='Managers').exists() == False:
         res = HttpResponse("Unauthorized")
         res.status_code = 401
         return res
@@ -238,7 +238,7 @@ def updateBook(request):
         res = HttpResponse("Unauthorized")
         res.status_code = 401
         return res
-    if current_user.groups.filter(name='Administrators').exists() == False:
+    if current_user.groups.filter(name='Managers').exists() == False:
         res = HttpResponse("Unauthorized")
         res.status_code = 401
         return res
