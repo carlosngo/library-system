@@ -1,6 +1,10 @@
 # Library System
 A machine project for the course Secure Web Development in De La Salle University
 
+Carlos Miguel Ngo
+Kathleen Nicole Garay
+Jeremy Dale Coronia
+
 ## How to run the project
 1. Clone the repository.
 2. Open the Terminal in /librarysystem
