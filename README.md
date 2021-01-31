@@ -1,5 +1,5 @@
 # Library System
-A machine project for the course Secure Web Development in De La Salle University
+A library system built using Django for the course Secure Web Development in De La Salle University. Different privileges are given for different roles.
 
 Carlos Miguel Ngo
 Kathleen Nicole Garay
