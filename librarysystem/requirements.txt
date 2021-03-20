@@ -2,4 +2,4 @@ Django==3.1.1
 django-axes==5.6.2
 django-ipware==3.0.1
 django-reset-migrations==0.4.0
-djangorestframework==3.11.1
+djangorestframework==3.11.2
