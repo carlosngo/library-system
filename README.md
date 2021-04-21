@@ -1,9 +1,5 @@
 # Library System
-A library system built using Django for the course Secure Web Development in De La Salle University. Different privileges are given for different roles.
-
-Carlos Miguel Ngo
-Kathleen Nicole Garay
-Jeremy Dale Coronia
+A library system to ease the process of borrowing its books for students and teachers. Implements basic access control with authorization and authentication.
 
 ## How to run the project
 1. Clone the repository.
